@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vue. js Hello World</title>
+        <script src ="https://cdn.jsdelivr.net/npm/vue"></script>
+    </head>
+    <body>
+        <div id="app">
+            <div>
+                <h1>{{ title }}</h1>
+                <p> {{ tagline }} </p>
+            </div>
+            <div v-for="question in questions">
+                <h3>{{ question.question }}</h3>
+            <div v-for="option in questions">
+                <label><input type="radio" name="options" id="optionA" value="A"> {{ option.question }}</label><br>
+            </div>
+        </div>
+        <!--<button v-on:click="submitQuiz">Submit Quiz</button>-->
+
+        
+
+        <script>
+            var app = new Vue ({
+                        el: "#app",
+                        data: { 
+                            title: "Harry Potter Quiz",
+                            tagline: "How well do you know Harry Potter? Take the quiz below to find out!",
+                            questions: [
+                            { question: "What is the name of Harry's owl?",
+                            A: "Hedwig",
+                            B: "Hogwarts",
+                            C: "Headwing",
+                            D: "Hagrid",
+                            correct: "A"
+                        },  { question: "What do Hermione's parents do for a living?",
+                            A: "Lawyers",
+                            B: "Dentists",
+                            C: "Artists",
+                            D: "Doctors",
+                            correct: "B"
+                        },  { question: "Who killed Cedirc Diggory?",
+                            A: "Cho Chang",
+                            B: "Prof. Umbridge",
+                            C: "Peter Pettigrew",
+                            D: "Draco Malfoy",
+                            correct: "C"
+                        },  { question: "Who is Tom Marvolo Riddle",
+                            A: "Rubeus Hagrid",
+                            B: "Newt Scamander",
+                            C: "Barty Crouch Jr.",
+                            D: "Lord Voldemort",
+                            correct: "D"
+                        },  { question: "What guards Azkaban Prison? ",
+                            A: "Elves",
+                            B: "Dementors",
+                            C: "Dragons",
+                            D: "Boggarts",
+                            correct: "B"
+                             }
+                        ]
+                        }
+                        });
+                      
+                
+        </script>
+    </body>
+</html>
