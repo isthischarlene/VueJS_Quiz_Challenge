@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Vue. js Hello World</title>
+        <title>Vue JS Quiz Challenge</title>
         <script src ="https://cdn.jsdelivr.net/npm/vue"></script>
     </head>
     <body>
         <div id="app">
-            <div>
-                <h1>{{ title }}</h1>
-                <p> {{ tagline }} </p>
-            </div>
+            <h1>{{ title }}</h1>
+            <p> {{ tagline }} </p>
             <div v-for="question in questions">
-                <h3>{{ question.question }}</h3>
-            <div v-for="option in questions">
-                <label><input type="radio" name="options" id="optionA" value="A"> {{ option.question }}</label><br>
+                <h4>{{ question.question }} </h4>
+                <label><input type="radio" name="options" value="A">{{ question.A }}</label><br>
+                <label><input type="radio" name="options" value="B">{{ question.B }}</label><br>
+                <label><input type="radio" name="options" value="C">{{ question.C }}</label><br>
+                <label><input type="radio" name="options" value="D">{{ question.D }}</label><br>
             </div>
         </div>
-        <!--<button v-on:click="submitQuiz">Submit Quiz</button>-->
-
-        
+        <button>Submit Quiz</button>
 
         <script>
+          
             var app = new Vue ({
                         el: "#app",
                         data: { 
@@ -33,7 +32,7 @@
                             C: "Headwing",
                             D: "Hagrid",
                             correct: "A"
-                        },  { question: "What do Hermione's parents do for a living?",
+                        }, { question: "What do Hermione's parents do for a living?",
                             A: "Lawyers",
                             B: "Dentists",
                             C: "Artists",
@@ -45,7 +44,7 @@
                             C: "Peter Pettigrew",
                             D: "Draco Malfoy",
                             correct: "C"
-                        },  { question: "Who is Tom Marvolo Riddle",
+                        },  { question: "Who is Tom Marvolo Riddle?",
                             A: "Rubeus Hagrid",
                             B: "Newt Scamander",
                             C: "Barty Crouch Jr.",
@@ -57,12 +56,102 @@
                             C: "Dragons",
                             D: "Boggarts",
                             correct: "B"
-                             }
+                        },  { question: "Who is the second oldest Weasley?",
+                          A: "Bill",
+                          B: "Percy",
+                          C: "Charlie",
+                          D: "Ron",
+                          answer: "C"
+                        },  { question: "Which of these is not an Unforgivable Curse?",
+                          A: "Avada Kedava",
+                          B: "Crucio",
+                          C: "Imperio",
+                          D: "Revelio",
+                          answer: "D"
+                        },  { question: "What is the name of the Black Family house elf?",
+                          A: "Kreacher",
+                          B: "Dobby",
+                          C: "Winky",
+                          D: "Sirius",
+                          answer: "A"
+                        },  { question: "What spell is used to help get rid of a boggart?",
+                          A: "Wingardium Leviosa",
+                          B: "Avada Kedava",
+                          C: "Ridikulos",
+                          D: "Expelliamus",
+                          answer: "C"
+                        },  { question: "Which two teams played in the 422nd Quiddicth World Cup?",
+                          A: "Austria vs New Zealand",
+                          B: "Switzerland vs Denmark",
+                          C: "Belgium vs Ivory Coast",
+                          D: "Bulgaria vs Ireland",
+                          answer: "D"
+                        },  { question: "Who was the first person petrified in Chamber of Secrets book?",
+                          A: "Hermione Granger",
+                          B: "Penelope Clearwater",
+                          C: "Luna Lovegood",
+                          D: "Colin Creevey",
+                          answer: "D"
+                        },  { question: "What is a squib?",
+                          A: "A magical person who has non-magical parents",
+                          B: "A type of plant for a healing potion",
+                          C: "Non-magical person who is born to at least one magical parent  ",
+                          D: "A wand made from a special type of wood",
+                          answer: "C"
+                        },  { question: "What is Nearly Headless Nick's real name?",
+                          A: "Nicholas de Mimsy-Porpington",
+                          B: "Nick Popped Poppington",
+                          C: "Nicholas Nearless Poppington",
+                          D: "Nicholas de Memsy-Porpington",
+                          answer: "A"
+                        },  { question: "Who below is a Death Eater?",
+                          A: "Remus Lupin",
+                          B: "Fenrir Greyback",
+                          C: "Molly Weasley",
+                          D: "Nymphodora Tonks",
+                          answer: "B"
+                        },  { question: "How do you free a house elf?",
+                          A: "You give the elf a hug ",
+                          B: "You give them a can of food",
+                          C: "You give them an item of clothing",
+                          D: "You give them a pat on the head",
+                          answer: "C"
+                        }, { question: "What is Hogwarts Motto?",
+                          A: "Ante Deum Asto",
+                          B: "Never tickle a sleeping dragon",
+                          C: "Audemus jura nostra defendere",
+                          D: "Giggling dragons are full of fun",
+                          answer: "B"
+                        },  { question: "What is an animagus?",
+                          A: "A witch or wizard who can’t morph him or herself into an animal at will",
+                          B: "Latin word for animal",
+                          C: "A witch or wizard who can morph him or herself into an animal at will",
+                          D: "A type of animal fungus used to make potions",
+                          answer: "C"
+                        },  { question: "What is the name of the mirror where you see what you most desire?",
+                          A: "Mirror of True Reflections",
+                          B: "Mirror of Erised",
+                          C: "Mirror of Cupidine Speculum.",
+                          D: "The mirror does not exist",
+                          answer: "B"
+                        },  { question: "Which of these is not a Horcrux?",
+                          A: "Godric Gryffindor's Sword",
+                          B: "Nagini the snake",
+                          C: "Tom Riddle’s Diary",
+                          D: "Rowena Ravenclaw’s Diagem ",
+                          answer: "A"
+                        },  { question: "What creature is the emblem for Hufflepuff House?",
+                          A: "A lion",
+                          B: "A badger",
+                          C: "A raven",
+                          D: "A squirrel",
+                          answer: "A"
+                        },  
                         ]
                         }
                         });
-                      
-                
+
+                        
         </script>
     </body>
 </html>
