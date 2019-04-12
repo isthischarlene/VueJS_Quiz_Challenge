@@ -2,21 +2,29 @@
 <html>
     <head>
         <title>Vue JS Quiz Challenge</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <link href="https://fonts.googleapis.com/css?family=Cardo" rel="stylesheet">
         <script src ="https://cdn.jsdelivr.net/npm/vue"></script>
     </head>
     <body>
         <div id="app">
-            <h1>{{ title }}</h1>
-            <p> {{ tagline }} </p>
-            <div v-for="question in questions">
-                <h4>{{ question.question }} </h4>
-                <label><input type="radio" name="options" value="A">{{ question.A }}</label><br>
-                <label><input type="radio" name="options" value="B">{{ question.B }}</label><br>
-                <label><input type="radio" name="options" value="C">{{ question.C }}</label><br>
-                <label><input type="radio" name="options" value="D">{{ question.D }}</label><br>
-            </div>
+            <div class="sidebars" id="sidebar1"></div>
+              <h1>{{ title }}</h1>
+              <h4> {{ tagline }} </h4>
+              <div v-for="question in questions" id="sidebar2">
+                  <h5>{{ question.question }} </h5>
+                  <label><input type="radio" name="options" value="A">{{ question.A }}</label><br>
+                  <label><input type="radio" name="options" value="B">{{ question.B }}</label><br>
+                  <label><input type="radio" name="options" value="C">{{ question.C }}</label><br>
+                  <label><input type="radio" name="options" value="D">{{ question.D }}</label><br>
+              </div>
+              <button id="submitBtn">Submit</button>
+          </div>
         </div>
-        <button>Submit Quiz</button>
+        <div class="sidebars" id="results"></div>
+        <div class="sidebars" id="sidebar4"></div>
+
 
         <script>
           
@@ -38,7 +46,7 @@
                             C: "Artists",
                             D: "Doctors",
                             correct: "B"
-                        },  { question: "Who killed Cedirc Diggory?",
+                        },  { question: "Who killed Cedric Diggory?",
                             A: "Cho Chang",
                             B: "Prof. Umbridge",
                             C: "Peter Pettigrew",
