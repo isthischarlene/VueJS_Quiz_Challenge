@@ -8,158 +8,246 @@
         <script src ="https://cdn.jsdelivr.net/npm/vue"></script>
     </head>
     <body>
-        <div id="app">
-            <div class="sidebars" id="sidebar1"></div>
-              <h1>{{ title }}</h1>
-              <h4> {{ tagline }} </h4>
-              <div v-for="question in questions" id="sidebar2">
-                  <h5>{{ question.question }} </h5>
-                  <label><input type="radio" name="options" value="A">{{ question.A }}</label><br>
-                  <label><input type="radio" name="options" value="B">{{ question.B }}</label><br>
-                  <label><input type="radio" name="options" value="C">{{ question.C }}</label><br>
-                  <label><input type="radio" name="options" value="D">{{ question.D }}</label><br>
-              </div>
-              <button id="submitBtn">Submit</button>
-          </div>
-        </div>
-        <div class="sidebars" id="results"></div>
-        <div class="sidebars" id="sidebar4"></div>
+    <div id="app">
+      <div class="sidebars" id="sidebar1"></div>
+    <h1>{{ quiz.title }}</h1>
+    <!-- index is used to check with current question index -->
+    <div v-for="(question, index) in quiz.questions">
+      <!-- Hide all questions, show only the one with index === to current question index -->
+      <div v-show="index === questionIndex">
+        <h2>{{ question.text }}</h2>
+        <ol>
+          <li v-for="response in question.responses">
+            <label>
+              <!-- The radio button has three new directives -->
+              <!-- v-bind:value sets "value" to "true" if the response is correct -->
+              <!-- v-bind:name sets "name" to question index to group answers by question -->
+              <!-- v-model creates binding with userResponses -->
+              <input type="radio"
+                     v-bind:value="response.correct" 
+                     v-bind:name="index" 
+                     v-model="userResponses[index]"> {{response.text}}
+            </label>
+          </li>
+        </ol>
+        <!-- The two navigation buttons -->
+        <!-- Note: prev is hidden on first question -->
+        <button class="submitBtn" v-if="questionIndex > 0" v-on:click="prev">
+          prev
+        </button>
+        <button class="submitBtn" v-on:click="next">
+          next
+        </button>
+      </div>
+    </div>
+    <div v-show="questionIndex === quiz.questions.length">
+      <h2>
+      Quiz finished
+    </h2>
+      <h3>
+        Total score: {{ score() }} / {{ quiz.questions.length }}
+      </h3>
+    </div>
+  </div>
+  <div class="sidebars" id="results"></div>
+  <div class="sidebars" id="sidebar4"></div>
 
-
-        <script>
-          
-            var app = new Vue ({
-                        el: "#app",
-                        data: { 
-                            title: "Harry Potter Quiz",
-                            tagline: "How well do you know Harry Potter? Take the quiz below to find out!",
-                            questions: [
-                            { question: "What is the name of Harry's owl?",
-                            A: "Hedwig",
-                            B: "Hogwarts",
-                            C: "Headwing",
-                            D: "Hagrid",
-                            correct: "A"
-                        }, { question: "What do Hermione's parents do for a living?",
-                            A: "Lawyers",
-                            B: "Dentists",
-                            C: "Artists",
-                            D: "Doctors",
-                            correct: "B"
-                        },  { question: "Who killed Cedric Diggory?",
-                            A: "Cho Chang",
-                            B: "Prof. Umbridge",
-                            C: "Peter Pettigrew",
-                            D: "Draco Malfoy",
-                            correct: "C"
-                        },  { question: "Who is Tom Marvolo Riddle?",
-                            A: "Rubeus Hagrid",
-                            B: "Newt Scamander",
-                            C: "Barty Crouch Jr.",
-                            D: "Lord Voldemort",
-                            correct: "D"
-                        },  { question: "What guards Azkaban Prison? ",
-                            A: "Elves",
-                            B: "Dementors",
-                            C: "Dragons",
-                            D: "Boggarts",
-                            correct: "B"
-                        },  { question: "Who is the second oldest Weasley?",
-                          A: "Bill",
-                          B: "Percy",
-                          C: "Charlie",
-                          D: "Ron",
-                          answer: "C"
-                        },  { question: "Which of these is not an Unforgivable Curse?",
-                          A: "Avada Kedava",
-                          B: "Crucio",
-                          C: "Imperio",
-                          D: "Revelio",
-                          answer: "D"
-                        },  { question: "What is the name of the Black Family house elf?",
-                          A: "Kreacher",
-                          B: "Dobby",
-                          C: "Winky",
-                          D: "Sirius",
-                          answer: "A"
-                        },  { question: "What spell is used to help get rid of a boggart?",
-                          A: "Wingardium Leviosa",
-                          B: "Avada Kedava",
-                          C: "Ridikulos",
-                          D: "Expelliamus",
-                          answer: "C"
-                        },  { question: "Which two teams played in the 422nd Quiddicth World Cup?",
-                          A: "Austria vs New Zealand",
-                          B: "Switzerland vs Denmark",
-                          C: "Belgium vs Ivory Coast",
-                          D: "Bulgaria vs Ireland",
-                          answer: "D"
-                        },  { question: "Who was the first person petrified in Chamber of Secrets book?",
-                          A: "Hermione Granger",
-                          B: "Penelope Clearwater",
-                          C: "Luna Lovegood",
-                          D: "Colin Creevey",
-                          answer: "D"
-                        },  { question: "What is a squib?",
-                          A: "A magical person who has non-magical parents",
-                          B: "A type of plant for a healing potion",
-                          C: "Non-magical person who is born to at least one magical parent  ",
-                          D: "A wand made from a special type of wood",
-                          answer: "C"
-                        },  { question: "What is Nearly Headless Nick's real name?",
-                          A: "Nicholas de Mimsy-Porpington",
-                          B: "Nick Popped Poppington",
-                          C: "Nicholas Nearless Poppington",
-                          D: "Nicholas de Memsy-Porpington",
-                          answer: "A"
-                        },  { question: "Who below is a Death Eater?",
-                          A: "Remus Lupin",
-                          B: "Fenrir Greyback",
-                          C: "Molly Weasley",
-                          D: "Nymphodora Tonks",
-                          answer: "B"
-                        },  { question: "How do you free a house elf?",
-                          A: "You give the elf a hug ",
-                          B: "You give them a can of food",
-                          C: "You give them an item of clothing",
-                          D: "You give them a pat on the head",
-                          answer: "C"
-                        }, { question: "What is Hogwarts Motto?",
-                          A: "Ante Deum Asto",
-                          B: "Never tickle a sleeping dragon",
-                          C: "Audemus jura nostra defendere",
-                          D: "Giggling dragons are full of fun",
-                          answer: "B"
-                        },  { question: "What is an animagus?",
-                          A: "A witch or wizard who can’t morph him or herself into an animal at will",
-                          B: "Latin word for animal",
-                          C: "A witch or wizard who can morph him or herself into an animal at will",
-                          D: "A type of animal fungus used to make potions",
-                          answer: "C"
-                        },  { question: "What is the name of the mirror where you see what you most desire?",
-                          A: "Mirror of True Reflections",
-                          B: "Mirror of Erised",
-                          C: "Mirror of Cupidine Speculum.",
-                          D: "The mirror does not exist",
-                          answer: "B"
-                        },  { question: "Which of these is not a Horcrux?",
-                          A: "Godric Gryffindor's Sword",
-                          B: "Nagini the snake",
-                          C: "Tom Riddle’s Diary",
-                          D: "Rowena Ravenclaw’s Diagem ",
-                          answer: "A"
-                        },  { question: "What creature is the emblem for Hufflepuff House?",
-                          A: "A lion",
-                          B: "A badger",
-                          C: "A raven",
-                          D: "A squirrel",
-                          answer: "A"
-                        },  
-                        ]
-                        }
-                        });
-
-                        
-        </script>
-    </body>
+  <script>
+  // Create a quiz object with a title and two questions.
+// A question has one or more answer, and one or more is valid.
+var quiz = {
+  title: 'Harry Potter Quiz',
+  questions: [
+    {
+      text: "What is the name of Harry's Owl?",
+      responses: [
+        {text: 'Hedwig', correct: true}, 
+        {text: 'Headwing'},
+        {text: 'Hogwarts'},
+        {text: 'Hagrid'}, 
+      ]
+    }, {
+      text: "What do Hermione's parents do for a living?",
+      responses: [
+        {text: 'Doctors'}, 
+        {text: 'Dentists', correct: true}, 
+        {text: 'Lawyers'}, 
+        {text: 'Artists'}, 
+      ]
+    } , {
+      text: "Who killed Cedric Diggory?",
+      responses: [
+        {text: 'Cho Chang'}, 
+        {text: 'Professor Umbridge'}, 
+        {text: 'Peter Pettigrew', correct: true}, 
+        {text: 'Draco Malfoy'}, 
+      ]
+    } , {
+      text: "Which newspaper does Rita Skeeter work for?",
+      responses: [
+        {text: 'The Daily Mail'}, 
+        {text: 'The Daily Quibbler'}, 
+        {text: 'The Daily Prophet', correct: true}, 
+        {text: 'The Daily Juice'}, 
+      ]
+    } , {
+      text: "Who is Tom Marvolo Riddle?",
+      responses: [
+        {text: 'Rubeus Hagrid'}, 
+        {text: 'Newt Scamander'}, 
+        {text: 'Barty Crouch Jr.'}, 
+        {text: 'Lord Voldemort', correct: true}, 
+      ]
+    } , {
+      text: "What guards Azkaban Prison?",
+      responses: [
+        {text: 'Elves'}, 
+        {text: 'Dementors', correct: true}, 
+        {text: 'Dragons'}, 
+        {text: 'Boggarts'}, 
+      ]
+    } , {
+      text: "Who is the second oldest Weasley",
+      responses: [
+        {text: 'Bill'}, 
+        {text: 'Percy'}, 
+        {text: 'Charlie', correct: true}, 
+        {text: 'Ron'}, 
+      ]
+    }, {
+      text: "Which of these is not an Unforgivable Curse?",
+      responses: [
+        {text: 'Avada Kedavra'}, 
+        {text: 'Crucio'}, 
+        {text: 'Imperio'}, 
+        {text: 'Revelio', correct: true}, 
+      ]
+    } , {
+      text: "What is the name of the Black Family house elf?",
+      responses: [
+        {text: 'Kreacher', correct: true}, 
+        {text: 'Dobby'}, 
+        {text: 'Elfie'}, 
+        {text: 'Sirius'}, 
+      ]
+    } , {
+      text: "What spell is used to help get rid of a boggart?",
+      responses: [
+        {text: 'Wingardium Leviosa', }, 
+        {text: 'Avada Kedavra'}, 
+        {text: 'Riddikulus', correct: true}, 
+        {text: 'Expelliamus'}, 
+      ]
+    }, {
+      text: "Which two teams played in the 422nd Quiddicth World Cup?",
+      responses: [
+        {text: 'Austria vs New Zealand'}, 
+        {text: 'Switzerland vs Denmark'}, 
+        {text: 'Belgium vs Ivory Coast'}, 
+        {text: 'Bulgaria vs Ireland', correct: true}, 
+      ]
+    } , {
+      text: "Who was the first person petrified in Chamber of Secrets book?",
+      responses: [
+        {text: 'Hermione Granger'}, 
+        {text: 'Penelope Clearwater'}, 
+        {text: 'Luna Lovegood'}, 
+        {text: 'Colin Creevey', correct: true}, 
+      ]
+    } , {
+      text: "What is a squib?",
+      responses: [
+        {text: 'A magical person who has non-magical parents'}, 
+        {text: 'A type of plant for a healing potion'}, 
+        {text: 'Non-magical person who is born to at least one magical parent', correct: true}, 
+        {text: 'A wand made from a special type of wood'}, 
+      ]
+    } , {
+      text: "What is Nearly Headless Nick's real name?",
+      responses: [
+        {text: 'Nicholas de Mimsy-Porpington', correct: true}, 
+        {text: 'Nick Popped Poppington'}, 
+        {text: 'Nicholas Nearless Poppington'}, 
+        {text: 'Nicholas de Memsy-Porpington'}, 
+      ]
+    } , {
+      text: "Who below is a Death Eater?",
+      responses: [
+        {text: 'Remus Lupin'}, 
+        {text: 'Fenrir Greyback', correct: true}, 
+        {text: 'Molly Weasley'}, 
+        {text: 'Nymphodora Tonks'}, 
+      ]
+    } , {
+      text: "How do you free a house elf?",
+      responses: [
+        {text: 'You give the elf a hug'}, 
+        {text: 'You give them a can of food'}, 
+        {text: 'You give them an item of clothing', correct: true}, 
+        {text: 'You give them a pat on the head'}, 
+      ]
+    } , {
+      text: "What is Hogwart's Motto?",
+      responses: [
+        {text: 'Ante Deum Asto'}, 
+        {text: 'Never tickle a sleeping dragon', correct: true}, 
+        {text: 'Audemus jura nostra defendere'}, 
+        {text: 'Giggling dragons are full of fun'}, 
+      ]
+    } , {
+      text: "What is an animagus?",
+      responses: [
+        {text: 'A witch or wizard who can’t morph him or herself into an animal at will'}, 
+        {text: 'Latin word for animal'}, 
+        {text: 'A witch or wizard who can morph him or herself into an animal at will', correct: true}, 
+        {text: 'A type of animal fungus used to make potions'}, 
+      ]
+    } , {
+      text: "What is the name of the mirror where you see what you most desire?",
+      responses: [
+        {text: 'Mirror of True Reflections'}, 
+        {text: 'Mirror of Erised', correct: true}, 
+        {text: 'Mirror of Cupidine Speculum'}, 
+        {text: 'The mirror does not exist'}, 
+      ]
+    } , {
+      text: "Which of these is not a Horcrux?",
+      responses: [
+        {text: 'Godric Gryffindors Sword', correct: true}, 
+        {text: 'Nagini the snake'}, 
+        {text: 'Tom Riddle’s Diary'}, 
+        {text: 'Rowena Ravenclaw’s Diagem'},
+      ]
+    } 
+  ]
+};
+      
+new Vue({
+  el: '#app',
+  data: {
+    quiz: quiz,
+    // Store current question index
+    questionIndex: 0,
+    // An array initialized with "false" values for each question
+    // It means: "did the user answered correctly to the question n?" "no".
+    userResponses: Array(quiz.questions.length).fill(false)
+  },
+  // The view will trigger these methods on click
+  methods: {
+    // Go to next question
+    next: function() {
+      this.questionIndex++;
+    },
+    // Go to previous question
+    prev: function() {
+      this.questionIndex--;
+    },
+    // Return "true" count in userResponses
+    score: function() {
+      return this.userResponses.filter(function(val) { return val }).length;
+    }
+  }
+});
+</script>
+</body>
 </html>

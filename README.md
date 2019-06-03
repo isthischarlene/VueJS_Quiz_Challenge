@@ -17,7 +17,6 @@ Bootstrap CDN: <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/b
 
 ## Acknowledgments
 
-* 
-* 
+* Thank you Raphaël Huchet for your online tutorial
 
 
